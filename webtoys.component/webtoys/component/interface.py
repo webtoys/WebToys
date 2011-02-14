@@ -1,6 +1,6 @@
 class InterfaceClass(object):
     """ InterfaceClass is responsible for handling
-        the component registry for each interface
+        the component registry for each interface.
     """
 
     """ NOTE: context can be a dict for multi-adapters
@@ -11,18 +11,23 @@ class InterfaceClass(object):
 
     def __init__(self, name, bases=(),
                  attrs=None, __doc__=None, __module__=None):
-        """ Upon construction, accepts class meta-data relating
-            to the derived Interface and inits the Interface
-            instance
+        """ Setup the registry. 
+
+            Upon construction, accept class meta-data relating
+            to the derived Interface and store.
         """
 
-        """ @registry is a dict where the key is a class and
-            the value is a list of rulesets
+        self.name = name
+
+        """ Init a dict to store class/ruleset
+            key/value pairs
         """
         self.__registry = {}
 
     def __call__(self, context=None):
-        """ When called, an Interface can return:
+        """ Return a component implementing Interface for @context.
+
+            Component can be one of the following:
             - A single component
             - An adapter/multi-adapter
             - A generator of subscribed components
@@ -38,11 +43,12 @@ class InterfaceClass(object):
     """ Component Registration """
 
     def register(self, cls, ruleset=None):
-        """ Registers component to Interface
-            optional ruleset helps the registry return
-            the most relevant component
+        """ Register component for Interface.
 
-            @cls is the class that should be registered
+            An optional @ruleset helps the registry return
+            the most relevant component.
+
+            @cls is the class that should be registered.
 
             @ruleset can be any callable that returns a
             boolean value. Rulesets are evaluated for their specificity
@@ -67,7 +73,7 @@ class InterfaceClass(object):
         self.__registry.setdefault(cls, []).append(ruleset)
 
     def lookup(self, context=None):
-        """ Returns a component/adapter that implements Interface
+        """ Return a component/adapter that implements Interface
             optionally, for a given context
             @context can be a tuple/list/dict in the case of multiadapters
         """
@@ -110,7 +116,7 @@ class InterfaceClass(object):
         pass
 
     def getsubscribers(self, context=None):
-        """ Returns a generator of subscribers """
+        """ Return a generator of subscribers """
         pass
 
 """ Create an instance which all interfaces extend """
