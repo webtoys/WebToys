@@ -1,3 +1,5 @@
+from adapter import BaseAdapter
+
 class InterfaceClass(object):
     """ InterfaceClass is responsible for handling
         the component registry for each interface.
